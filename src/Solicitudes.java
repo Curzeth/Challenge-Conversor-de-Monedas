@@ -39,24 +39,18 @@ public class Solicitudes {
         return usdToArs;
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-
-        Scanner valor = new Scanner(System.in);
-
-        var convertirValor = valor.nextLine();
-
-        public String urlCompleta(String urlBase + monto) {
+    public String urlCompleta(String urlBase + monto) {
             return urlBase + monto;
         }
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create())
-                .build();
-        HttpResponse<String> response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
-
-        System.out.println("Respuesta: " + response.body());
+//        HttpClient client = HttpClient.newHttpClient();
+//        HttpRequest request = HttpRequest.newBuilder()
+//                .uri(URI.create())
+//                .build();
+//        HttpResponse<String> response = client
+//                .send(request, HttpResponse.BodyHandlers.ofString());
+//
+//        System.out.println("Respuesta: " + response.body());
     }
 
 }

@@ -41,10 +41,10 @@ public class Menu {
                 String usdToArs = Solicitudes.getustToMxn();
                 break;
             case 7:
-                System.out.println();
+                System.out.println("Saliendo del programa... Gracias por su preferencia ♥");
                 break;
             default:
-                System.out.println();
+                System.out.println("Opción no válida");
         }
 
 
