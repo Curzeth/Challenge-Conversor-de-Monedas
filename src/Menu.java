@@ -1,3 +1,8 @@
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Scanner;
 
 public class Menu {
@@ -18,27 +23,28 @@ public class Menu {
                 7 - Salir
                 -----------------------------------------------------
                 """);
+
         int opcion = sc.nextInt();
-        double monto;
+        String urlCompleta = "";
 
         switch (opcion) {
             case 1:
-                String mxnToUsd = Solicitudes.getmxnToUsd();
+                urlCompleta = Solicitudes.getUrlCompletaMXNtoUSD();
                 break;
             case 2:
-                String usdToMxn = Solicitudes.getustToMxn();
+                urlCompleta = Solicitudes.getUrlCompletaUSDtoMXN();
                 break;
             case 3:
-                String copToUsd = Solicitudes.getustToMxn();
+                urlCompleta = Solicitudes.getUrlCompletaCOPtoUSD();
                 break;
             case 4:
-                String usdToCop = Solicitudes.getustToMxn();
+                urlCompleta = Solicitudes.getUrlCompletaUSDtoCOP();
                 break;
             case 5:
-                String arsToUsd = Solicitudes.getustToMxn();
+                urlCompleta = Solicitudes.getUrlCompletaARStoUSD();
                 break;
             case 6:
-                String usdToArs = Solicitudes.getustToMxn();
+                urlCompleta = Solicitudes.getUrlCompletaUSDtoARS();
                 break;
             case 7:
                 System.out.println("Saliendo del programa... Gracias por su preferencia ♥");
@@ -47,8 +53,27 @@ public class Menu {
                 System.out.println("Opción no válida");
         }
 
+        System.out.println("Ingrese el valor que desea convertir:");
+        double monto = sc.nextDouble();
+        urlCompleta += monto;
 
-//        Ingrese el valor que desea convertir:
+        try {
+            HttpURLConnection connection = (HttpURLConnection) new URL(urlCompleta).openConnection();
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
 
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                Scanner rs = new Scanner(connection.getInputStream());
+                StringBuilder response = new StringBuilder();
+                while (rs.hasNextLine()) {
+                    response.append(rs.nextLine());
+                }
+                System.out.println("Resultado: " + response.toString());
+            } else {
+                System.out.println("Error en la solicitud:" + responseCode);
+            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
